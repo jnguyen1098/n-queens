@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wpedantic -ggdb
+CFLAGS = -Wall -Ofast -Wextra -Wpedantic -ggdb
 VFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 .PHONY = run

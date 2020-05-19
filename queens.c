@@ -155,7 +155,7 @@ void sex(char mom[N + 1], char dad[N + 1], char kid[N + 1])
         kid[i] = dad[i];
     }
 
-    if (RANDOM(0, 1000) < 100) {
+    if (RANDOM(0, 1000) < 200) {
         if (RANDOM(0, 1000) < 500) {
             kid[RANDOM(0, N - 1)] = RANDOM(0, N) + '0';
             scramble(kid);
@@ -192,6 +192,8 @@ int main(void)
 
     // generating random individuals
     char strings[MAX][N + 1] = { 0 };
+
+RESTART:
     generandom(strings, MAX);
     for (int i = 0; i < MAX; i++) {
         char phony[N + 1] = "";
@@ -199,15 +201,8 @@ int main(void)
         CLEAR(board);
         TO_BOARD(phony);
         int fitness = check_board(board, phony);
-#if 0
-            printf("Fitness: %d\n", fitness);
-            PRINT(board);
-            puts("");
-            usleep(1000 * 100);
-#endif
         if (!fitness) {
-            printf("%s master race\n", phony);
-            exit(EXIT_SUCCESS);
+            goto RESTART;
         }
     }
 
@@ -230,11 +225,10 @@ int main(void)
         qsort(results, MAX, sizeof(Result), cmpfit);
 
         int sum = 0;
-        for (int i = 0; i < MAX; i++) {
-            //printf("%s (%d)\n", results[i].str, results[i].fitness);
+        for (int i = 0; i < MAX; i++)
             sum += results[i].fitness;
-        }
-        printf("Generation #%5d, avg %2d, best %2d (%s)\n",
+
+        printf("Generation %4d, avg %2d, best %2d (%s)\n",
                 gen + 1, sum / MAX, champion.fitness, champion.str);
 
         if (results[0].fitness < champion.fitness) {
@@ -242,16 +236,7 @@ int main(void)
             champion.fitness = results[0].fitness;
         }
 
-#if 0
-        puts("Champion:");
-        for (int i = 0; i < 1; i++)
-            printf("%s (%d)\n", results[i].str, results[i].fitness);
-#endif
-
-        for (int i = 0; i < MAX; i++)
-            strings[i][0] = 0;
-
-#define UBOUND ((MAX / 10) * 8)
+#define UBOUND ((MAX / 10) * 5)
 
         for (int i = 0; i < MAX; i++) {
             char tmp[N + 1] = "";
