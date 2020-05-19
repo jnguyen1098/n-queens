@@ -1,0 +1,3 @@
+# n-Queens
+
+fuck
