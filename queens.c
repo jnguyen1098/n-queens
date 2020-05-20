@@ -170,7 +170,7 @@ int main(void)
     // seed
     srand(time(0));
 
-#if 1
+#if 0
 
     // create test state
     char base_state[N + 1] = "87654321";
