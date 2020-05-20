@@ -170,6 +170,8 @@ int main(void)
     // seed
     srand(time(0));
 
+#if 1
+
     // create test state
     char base_state[N + 1] = "87654321";
     assert(VERIFY(base_state));
@@ -256,6 +258,7 @@ RESTART:
     PRINT(board);
 
     return 0;
+#endif
 }
 
 
