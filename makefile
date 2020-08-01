@@ -1,17 +1,23 @@
 CC = gcc
-CFLAGS = -Wall -Ofast -Wextra -Wpedantic -ggdb
+CFLAGS = -Wall -Ofast -Wextra -Wpedantic -ggdb -Iinclude
 VFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
+OBJECTS = queens.o
+INCLUDE = queens.h
 
-.PHONY = run clean
+.PHONY = run clean main valgrind
 
-run: queens
-	./queens
+run: main
+	./main
 
-queens: queens.o
-	$(CC) $(CFLAGS) queens.o -o queens
+valgrind: main
+	valgrind $(VFLAGS) ./main
 
-queens.o: queens.c
-	$(CC) $(CFLAGS) -c queens.c -o queens.o
+main: $(OBJECTS)
+	$(CC) $(CFLAGS) main.c $(OBJECTS) -o main
+
+%.o: %.c $(INCLUDE)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 clean:
-	rm -rf queens queens.o
+	rm *.o main
